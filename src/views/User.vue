@@ -48,7 +48,9 @@ import moment from "moment";
 export default {
   data() {
     return {
-      date: moment().format("dddd, MMMM Do, YYYY"),
+      date: moment(this.$route.params.date, "YYYYMMDD").format(
+        "dddd, MMMM Do, YYYY"
+      ),
       entries: [],
       entryType: null,
       foodsConsumed: null,

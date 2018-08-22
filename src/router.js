@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import User from "./views/User.vue";
+import moment from "moment";
 
 Vue.use(Router);
 
@@ -24,9 +25,22 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
+      path: "/user/:username/:date",
+      name: "userDate",
+      component: User
+    },
+    {
       path: "/user/:username",
       name: "user",
-      component: User
+      redirect: to => {
+        return {
+          name: "userDate",
+          params: {
+            username: to.params.username,
+            date: moment().format("YYYYMMDD")
+          }
+        };
+      }
     }
   ]
 });
