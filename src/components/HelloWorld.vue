@@ -37,9 +37,10 @@ export default {
         }
         // The signed-in user info.
         var user = result.user;
+        user.username = user.email.split("@gmail.com")[0];
         router.push({
           name: "user",
-          params: { username: user.email, user, token }
+          params: { username: user.username, user, token }
         });
       })
       .catch(function(error) {
@@ -67,9 +68,10 @@ export default {
     // [START authstatelistener]
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
+        user.username = user.email.split("@gmail.com")[0];
         router.push({
           name: "user",
-          params: { username: user.email, user }
+          params: { username: user.username, user }
         });
         // User is signed in.
         var displayName = user.displayName;

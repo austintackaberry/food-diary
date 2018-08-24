@@ -55,7 +55,8 @@ export default {
       entryType: null,
       foodsConsumed: null,
       feeling: null,
-      timestamp: moment().format("h:mm A")
+      timestamp: moment().format("h:mm A"),
+      dataToken: null
     };
   },
   props: {
@@ -77,6 +78,14 @@ export default {
       this.feeling = null;
       this.foodsConsumed = null;
       this.timestamp = moment().format("h:mm A");
+    }
+  },
+  async mounted() {
+    console.log(this.user);
+    if (!this.token) {
+      this.dataToken = await this.user.getIdToken();
+    } else {
+      this.dataToken = this.token;
     }
   }
 };
