@@ -4,9 +4,49 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <router-view v-if="this.load"/>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return { load: false };
+  },
+  created() {
+    const router = this.$router;
+    const firebase = this.$store.state.firebase;
+    function getUser() {
+      return new Promise(resolve => {
+        if (firebase.auth().currentUser) {
+          resolve(firebase.auth().currentUser);
+        } else {
+          const unsubscribe = firebase
+            .auth()
+            .onAuthStateChanged(function(user) {
+              unsubscribe();
+              if (user) {
+                resolve(user);
+              } else {
+                resolve(false);
+              }
+            });
+        }
+      });
+    }
+    return getUser().then(user => {
+      if (user) {
+        user.username = user.email.split("@gmail.com")[0];
+        router.push({
+          name: "user",
+          params: { username: user.username, user }
+        });
+      }
+      this.load = true;
+    });
+  }
+};
+</script>
 
 <style>
 #app {

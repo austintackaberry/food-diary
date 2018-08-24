@@ -6,7 +6,7 @@ import moment from "moment";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
@@ -28,7 +28,16 @@ export default new Router({
       path: "/user/:username/:date",
       name: "userDate",
       component: User,
-      props: true
+      props: true,
+      beforeEnter: (to, from, next) => {
+        if (!to.params.user) {
+          next({
+            name: "home"
+          });
+        } else {
+          next();
+        }
+      }
     },
     {
       path: "/user/:username",
@@ -45,3 +54,5 @@ export default new Router({
     }
   ]
 });
+
+export default router;
