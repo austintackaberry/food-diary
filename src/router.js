@@ -27,7 +27,8 @@ export default new Router({
     {
       path: "/user/:username/:date",
       name: "userDate",
-      component: User
+      component: User,
+      props: true
     },
     {
       path: "/user/:username",
@@ -36,8 +37,8 @@ export default new Router({
         return {
           name: "userDate",
           params: {
-            username: to.params.username,
-            date: moment().format("YYYYMMDD")
+            date: moment().format("YYYYMMDD"),
+            ...to.params
           }
         };
       }
