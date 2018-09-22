@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is {{user.displayName}}'s page</h1>
+    <h1>Hello, {{user.displayName}}</h1>
     <h2>{{date}}</h2>
     <form @submit.prevent="onSubmit">
       <p>Add an entry:</p>
